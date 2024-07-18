@@ -109,7 +109,11 @@ export function embed(
         return;
       }
 
-      location.href = normalizeLink(to);
+      if (window.history.pushState) {
+        window.history.pushState('', document.title, normalizeLink(to));
+      } else {
+        location.href = normalizeLink(to);
+      }
     },
     isCurrentUrl: (to: string, ctx?: any) => {
       const link = normalizeLink(to);
@@ -164,6 +168,8 @@ export function embed(
 
       if (/^https?:\/\//.test(to)) {
         window.location.replace(to);
+      } else if (window.history.pushState) {
+        window.history.pushState('', document.title, to);
       } else {
         location.href = to;
       }
