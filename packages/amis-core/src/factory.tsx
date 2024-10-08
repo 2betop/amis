@@ -170,7 +170,8 @@ export function Renderer(config: RendererBasicConfig) {
       ...config,
       component: component
     });
-    return renderer.component as T;
+    // 返回原始组件，方便复用
+    return renderer.Renderer as T;
   };
 }
 

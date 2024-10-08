@@ -1424,6 +1424,7 @@ export function OptionsControl(config: OptionsBasicConfig) {
       ...config,
       component: component
     });
-    return renderer.component as any;
+    // 返回原始组件，方便复用
+    return renderer.Renderer as T;
   };
 }

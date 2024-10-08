@@ -2376,7 +2376,8 @@ export function FormItem(config: FormItemBasicConfig) {
       component
     });
 
-    return renderer.component as any;
+    // 返回原始组件，方便复用
+    return renderer.Renderer as T;
   };
 }
 
