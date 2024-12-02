@@ -42,6 +42,8 @@ import {evalExpression, filter} from './utils/tpl';
 import {CSSTransition} from 'react-transition-group';
 import {createAnimationStyle} from './utils/animations';
 import styleManager from './StyleManager';
+import {observeGlobalVars} from './globalVar';
+import {cloneObject} from './utils/object';
 
 interface SchemaRendererProps
   extends Partial<Omit<RendererProps, 'statusStore'>>,
@@ -113,6 +115,8 @@ export class SchemaRenderer extends React.Component<SchemaRendererProps, any> {
     exit?: string;
   } = {};
 
+  tmpData?: any;
+
   toDispose: Array<() => any> = [];
   unbindEvent: (() => void) | undefined = undefined;
   unbindGlobalEvent: (() => void) | undefined = undefined;
@@ -120,9 +124,10 @@ export class SchemaRenderer extends React.Component<SchemaRendererProps, any> {
 
   constructor(props: SchemaRendererProps) {
     super(props);
-    const animations = props?.schema?.animations;
+    const schema = props.schema;
+    const animations = schema.animations;
     if (animations) {
-      let id = props?.schema.id;
+      let id = schema.id;
       id = formateId(id);
       if (animations.enter) {
         this.animationTimeout.enter =
@@ -146,13 +151,14 @@ export class SchemaRenderer extends React.Component<SchemaRendererProps, any> {
     this.dispatchEvent = this.dispatchEvent.bind(this);
     this.addAnimationAttention = this.addAnimationAttention.bind(this);
     this.removeAnimationAttention = this.removeAnimationAttention.bind(this);
+    this.handleGlobalVarChange = this.handleGlobalVarChange.bind(this);
 
     // 监听statusStore更新
     this.toDispose.push(
       reaction(
         () => {
-          const id = filter(props.schema.id, props.data);
-          const name = filter(props.schema.name, props.data);
+          const id = filter(schema.id, props.data);
+          const name = filter(schema.name, props.data);
           return `${
             props.statusStore.visibleState[id] ??
             props.statusStore.visibleState[name]
@@ -166,6 +172,10 @@ export class SchemaRenderer extends React.Component<SchemaRendererProps, any> {
         },
         () => this.forceUpdate()
       )
+    );
+
+    this.toDispose.push(
+      observeGlobalVars(schema, props.topStore, this.handleGlobalVarChange)
     );
   }
 
@@ -211,6 +221,21 @@ export class SchemaRenderer extends React.Component<SchemaRendererProps, any> {
     }
 
     return false;
+  }
+
+  handleGlobalVarChange() {
+    const handler = this.renderer?.onGlobalVarChanged;
+    const newData = cloneObject(this.props.data);
+
+    // 如果渲染器自己做了实现，且返回 false，则不再继续往下执行
+    if (handler?.(this.cRef, this.props.schema, newData) === false) {
+      return;
+    }
+
+    this.tmpData = newData;
+    this.forceUpdate(() => {
+      delete this.tmpData;
+    });
   }
 
   removeAnimationStyle() {
@@ -357,7 +382,10 @@ export class SchemaRenderer extends React.Component<SchemaRendererProps, any> {
           ? evalExpression(_.staticOn, rest.data)
           : _.static ?? rest.defaultStatic),
       ...subProps,
-      data: subProps.data || rest.data,
+      data:
+        this.tmpData && subProps.data === this.props.data
+          ? this.tmpData
+          : subProps.data || rest.data,
       env: env
     });
   }
@@ -584,6 +612,9 @@ export class SchemaRenderer extends React.Component<SchemaRendererProps, any> {
       dispatchEvent: this.dispatchEvent,
       mobileUI: schema.useMobileUI === false ? false : rest.mobileUI
     };
+
+    // 用于全局变量刷新
+    props.data = this.tmpData || props.data;
 
     // style 支持公式
     if (schema.style) {
