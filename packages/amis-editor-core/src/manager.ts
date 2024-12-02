@@ -2278,6 +2278,13 @@ export class EditorManager {
     }
   }
 
+  /**
+   * 初始化全局变量
+   */
+  async initGlobalVariables() {
+    // todo
+  }
+
   beforeDispatchEvent(
     originHook: any,
     e: any,

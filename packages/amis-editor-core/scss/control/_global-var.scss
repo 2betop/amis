@@ -1,0 +1,17 @@
+.ae-GlobalVarManager {
+  padding: 12px;
+
+  & > ul {
+    list-style: none;
+  }
+
+  &-empty {
+    color: #b4b6ba;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  &-AddBtn {
+    margin-top: 12px;
+  }
+}
