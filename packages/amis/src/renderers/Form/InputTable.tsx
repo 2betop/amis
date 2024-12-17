@@ -1992,6 +1992,7 @@ export default class FormTable<
 
     const query = this.state.query;
     const filteredItems = this.state.filteredItems;
+    const items = this.state.items;
     let showPager = typeof perPage === 'number';
     let page = this.state.page || 1;
 

@@ -144,6 +144,10 @@ export class CRUDPlugin extends BasePlugin {
                 unSelectedItems: {
                   type: 'array',
                   title: '未选择行记录'
+                },
+                selectedIndexes: {
+                  type: 'array',
+                  title: '已选择行索引'
                 }
               }
             }
@@ -2330,6 +2334,10 @@ export class CRUDPlugin extends BasePlugin {
               ...childSchema.properties.unSelectedItems.items,
               properties: itemsSchema
             }
+          },
+          selectedIndexes: {
+            type: 'array',
+            title: '已选择行索引'
           },
           count: {
             type: 'number',
