@@ -102,7 +102,9 @@ export class OutlinePanel extends React.Component<PanelProps> {
       const id = dom.getAttribute('data-node-id')!;
       const region = dom.getAttribute('data-node-region')!; // 大纲树中的容器节点
 
-      id && region && manager.dnd.switchToRegion(e.nativeEvent, id, region);
+      id &&
+        region &&
+        manager.dnd.switchToRegion(e.nativeEvent, id, region, true);
     }, 100);
   }
 
@@ -393,7 +395,7 @@ export class OutlinePanel extends React.Component<PanelProps> {
             >
               {store.dragging ? (
                 <div className="ae-Outline-tip">
-                  拖拽过程中按下功能键可切换容器，或拖入以下区域切换
+                  拖拽过程中可以拖入以下区域切换拖入容器
                 </div>
               ) : null}
 

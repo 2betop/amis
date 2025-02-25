@@ -54,6 +54,11 @@ export class EditorDNDManager {
   dragImage?: HTMLElement;
 
   /**
+   * 是否锁定自动切换
+   */
+  lockAutoSwitch = false;
+
+  /**
    * 记录上次鼠标位置信息，协助拖拽计算的。
    */
   lastX: number = 0;
@@ -125,7 +130,15 @@ export class EditorDNDManager {
    * @param id
    * @param region
    */
-  switchToRegion(e: DragEvent, id: string, region: string): boolean {
+  switchToRegion(
+    e: DragEvent,
+    id: string,
+    region: string,
+    lockAutoSwitch = false
+  ): boolean {
+    // 如果锁定了，将不会自动切换容器了
+    // 拖完后释放
+    this.lockAutoSwitch = lockAutoSwitch || this.lockAutoSwitch;
     const store = this.store;
     if (
       !id ||
@@ -347,7 +360,7 @@ export class EditorDNDManager {
 
     const dx = e.clientX - this.lastX;
     const dy = e.clientY - this.lastY;
-    const d = Math.max(Math.abs(dx), Math.abs(dy));
+    const d = Math.hypot(dx, dy);
 
     if (
       d > 0 &&
@@ -429,24 +442,38 @@ export class EditorDNDManager {
     }
 
     const curRegion = target.closest(`[data-region][data-region-host]`);
-    const hostId = curRegion?.getAttribute('data-region-host');
-    const region = curRegion?.getAttribute('data-region');
+    let hostId = curRegion?.getAttribute('data-region-host');
+    let region = curRegion?.getAttribute('data-region');
+
     const containerElem = target.closest('[data-editor-id][data-container]');
-    const containerId = containerElem?.getAttribute('data-editor-id');
 
-    const isMetaPressed = e.ctrlKey || e.metaKey || e.altKey;
-
-    if (isMetaPressed) {
-      if (region && hostId && containerElem!.contains(curRegion)) {
-        store.setPlanDropId(hostId, region);
-      } else if (containerId) {
-        store.setPlanDropId(containerId, '');
-      }
-      return;
+    // 如果拖拽所在的组件，包含当前dropId ， 且这次是打算切到外层取，则不允许
+    // 就是拖拽还发生在当前组件，不要把拖入容器切到上层去
+    if (
+      curRegion &&
+      containerElem &&
+      curRegion.contains(containerElem) &&
+      containerElem.querySelector(`[data-region-host="${store.dropId}"]`)
+    ) {
+      hostId = '';
+      region = '';
     }
 
+    // const containerId = containerElem?.getAttribute('data-editor-id');
+
+    // const isMetaPressed = e.ctrlKey || e.metaKey || e.altKey;
+
+    // if (isMetaPressed) {
+    //   if (region && hostId && containerElem!.contains(curRegion)) {
+    //     store.setPlanDropId(hostId, region);
+    //   } else if (containerId) {
+    //     store.setPlanDropId(containerId, '');
+    //   }
+    //   return;
+    // }
+
     // 没移动还是不要处理，免得晃动个不停。
-    if (d < 5) {
+    if (d < 10) {
       // if (!curRegion || hostId === store.dropId) {
       //   return;
       // }
@@ -466,9 +493,13 @@ export class EditorDNDManager {
     this.lastX = e.clientX;
     this.lastY = e.clientY;
 
-    // 同一个容器组件下面的区域可以快速切换。
-    if (store.dropId === hostId && region && region !== store.dropRegion) {
-      this.switchToRegion(e, store.dropId, region);
+    if (
+      !this.lockAutoSwitch &&
+      region &&
+      hostId &&
+      (store.dropId !== hostId || region !== store.dropRegion)
+    ) {
+      this.switchToRegion(e, hostId, region);
       return;
     }
 
@@ -573,6 +604,7 @@ export class EditorDNDManager {
     this.store.setPlanDropId('', '');
     this.disposeDragImage();
     this.dragEnterCount = 0;
+    this.lockAutoSwitch = false;
   }
 
   /**

@@ -167,7 +167,9 @@ export class ContainerPlugin extends LayoutBasePlugin {
   ) {
     const context = event.context;
     const node = context.node;
-    const host = node.host;
+    if (node.info?.plugin !== this) {
+      return;
+    }
 
     const dom = context.dom;
     const parent = dom.parentElement as HTMLElement;

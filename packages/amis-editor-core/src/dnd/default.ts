@@ -11,7 +11,8 @@ import {DNDModeInterface} from './interface';
 
 export class DefaultDNDMode implements DNDModeInterface {
   readonly dndContainer: HTMLElement; // 记录当前拖拽区域
-  dropBeforeId?: string;
+  dropOn?: string;
+  dropPosition?: 'top' | 'bottom' | 'left' | 'right';
   constructor(readonly dnd: EditorDNDManager, readonly region: EditorNodeType) {
     // 初始化时，默认将元素所在区域设置为当前拖拽区域
     this.dndContainer = this.dnd.store
@@ -20,6 +21,8 @@ export class DefaultDNDMode implements DNDModeInterface {
         `[data-region="${region.region}"][data-region-host="${region.id}"]`
       ) as HTMLElement;
   }
+
+  layoutInfo: LayoutInfo | null = null;
 
   /**
    * 记录上次交换时的鼠标位置。
@@ -33,38 +36,16 @@ export class DefaultDNDMode implements DNDModeInterface {
    * @param ghost
    */
   enter(e: DragEvent, ghost: HTMLElement) {
-    const dragEl = this.dnd.dragElement;
-    // 如果就在移动的元素所在的区域，那么把 ghost 放到原来的位置。
-    if (dragEl && dragEl.closest('[data-region]') === this.dndContainer) {
-      const list: Array<any> = Array.isArray(this.region.schema)
-        ? this.region.schema
-        : [];
-      const child = this.getChild(this.dndContainer, dragEl);
-      const id = dragEl.getAttribute('data-editor-id')!;
-      const idx = findIndex(list, (item: any) => item.$$id === id);
-      if (~idx && list[idx + 1]) {
-        this.dropBeforeId = list[idx + 1].$$id;
-      }
-      this.dndContainer.insertBefore(ghost, child);
+    ghost.innerHTML = '';
+    ghost.classList.add('use-indicator');
 
-      let innerHTML = dragEl.outerHTML
-        .replace('ae-is-draging', '')
-        // .replace(/\bdata\-editor\-id=('|").+?\1/g, '');
-        // 上面那个会让 fis 编译的时候把后续的 require 语句都给忽略掉了。
-        .replace(/\bdata\-editor\-id=(?:'.+?'|".+?")/g, '');
-      // bca-disable-next-line
-      ghost.innerHTML = innerHTML;
-    } else {
-      const manager = this.dnd.manager;
-      const store = manager.store;
-      renderThumbToGhost(
-        ghost,
-        this.region,
-        translateSchema(store.dragSchema),
-        manager
-      );
-      this.dndContainer.appendChild(ghost);
-    }
+    const layoutInfo = new LayoutDetector(this.dndContainer).detect();
+    this.layoutInfo = layoutInfo;
+
+    ghost.style.cssText =
+      'width: var(--ae-DragGhost-size); height: var(--ae-DragGhost-size);';
+    this.dndContainer.appendChild(ghost);
+    this.over(e, ghost);
   }
 
   /**
@@ -73,76 +54,68 @@ export class DefaultDNDMode implements DNDModeInterface {
    * @param ghost
    */
   leave(e: DragEvent, ghost: HTMLElement) {
+    this.layoutInfo = null;
+    ghost.classList.remove('use-indicator');
     this.dndContainer.removeChild(ghost);
   }
 
   over(e: DragEvent, ghost: HTMLElement) {
     const target = this.getTarget(e);
     const wrapper = this.dndContainer;
-    const elemSchema = this.region.schema;
-    const list: Array<any> = Array.isArray(elemSchema) ? elemSchema : [];
-    const dx = e.clientX - this.exchangeX;
-    const dy = e.clientY - this.exchangeY;
-    const vertical = Math.abs(dy) > Math.abs(dx);
-    const manager = this.dnd.manager;
-    const store = manager.store;
 
-    if (target && !animation.animating) {
-      const targetId = target.getAttribute('data-editor-id')!;
-      const targetChild = this.getChild(wrapper, target!);
-      const idx = findIndex(list, (item: any) => item.$$id === targetId);
-
-      const originIdx = Array.prototype.indexOf.call(wrapper.children, ghost);
-      const targetIdx = Array.prototype.indexOf.call(
-        wrapper.children,
-        targetChild
+    if (target) {
+      const dropPosition = this.detectDropPosition(e, target);
+      this.updateIndicator(
+        ghost,
+        wrapper,
+        target,
+        this.reductionPosition(dropPosition, this.layoutInfo?.isHorizontal)
       );
+    } else if (!this.dropOn) {
+      // 拖入了某个区域上
+      const dropPosition = this.detectDropPosition(e, wrapper);
+      const children = this.getChildren(wrapper);
 
-      if (
-        ~originIdx &&
-        originIdx > targetIdx &&
-        (!this.exchangeY || (vertical ? dy < 0 : dx < 0))
-        // (!this.exchangeY || dy < 0 || dx < 0)
-      ) {
-        // 原来在后面，移动到前面
-        this.exchangeX = e.clientX;
-        this.exchangeY = e.clientY;
-        this.dropBeforeId = list[idx]?.$$id;
-
-        if (originIdx !== targetIdx - 1) {
-          animation.capture(wrapper);
-          wrapper.insertBefore(ghost, targetChild);
-          animation.animateAll(store.calculateHighlightBox);
-        }
-      } else if (
-        ~originIdx &&
-        originIdx < targetIdx &&
-        // (!this.exchangeY || dy > 0 || dx > 0)
-        (!this.exchangeY || (vertical ? dy > 0 : dx > 0))
-      ) {
-        // 原来在前面，移动到后面
-        this.exchangeX = e.clientX;
-        this.exchangeY = e.clientY;
-
-        if (list[idx + 1]) {
-          this.dropBeforeId = list[idx + 1]?.$$id;
+      if (!children.length) {
+        const placeholder = wrapper.querySelector('.ae-Region-placeholder');
+        if (placeholder) {
+          this.updateIndicator(
+            ghost,
+            wrapper,
+            placeholder as HTMLElement,
+            dropPosition
+          );
         } else {
-          delete this.dropBeforeId;
+          // 当没有孩子时，高亮在中间
+          const layoutInfo = this.layoutInfo!;
+          const rect = wrapper.getBoundingClientRect();
+          ghost.style.cssText += `
+            left: ${layoutInfo.isHorizontal ? '50%' : '0'};
+            top: ${layoutInfo.isHorizontal ? '0' : '50%'};
+            width: ${
+              layoutInfo.isHorizontal
+                ? 'var(--ae-DragGhost-size)'
+                : `${rect.width}px`
+            };
+            height: ${
+              layoutInfo.isHorizontal
+                ? `${rect.height}px`
+                : 'var(--ae-DragGhost-size)'
+            };
+          `;
         }
-
-        if (originIdx !== targetIdx + 1) {
-          animation.capture(wrapper);
-          wrapper.insertBefore(ghost, targetChild.nextSibling);
-          animation.animateAll(store.calculateHighlightBox);
-        }
+        return;
       }
-    }
-
-    if (ghost.parentNode !== wrapper) {
-      delete this.dropBeforeId;
-      animation.capture(wrapper);
-      wrapper.appendChild(ghost);
-      animation.animateAll(store.calculateHighlightBox);
+      this.updateIndicator(
+        ghost,
+        wrapper,
+        children[
+          dropPosition === 'top' || dropPosition === 'left'
+            ? 0
+            : children.length - 1
+        ] as HTMLElement,
+        this.reductionPosition(dropPosition, this.layoutInfo?.isHorizontal)
+      );
     }
   }
 
@@ -150,7 +123,23 @@ export class DefaultDNDMode implements DNDModeInterface {
    * 返回个相对位置，如果没有数据会插入到结尾。
    */
   getDropBeforeId() {
-    return this.dropBeforeId;
+    if (!this.dropOn) {
+      return;
+    }
+
+    if (this.dropPosition === 'top' || this.dropPosition === 'left') {
+      return this.dropOn;
+    }
+
+    const children = this.getChildren(this.dndContainer);
+    const idx = children.findIndex(
+      item => item.getAttribute('data-editor-id') === this.dropOn
+    );
+    if (idx !== -1 && children[idx + 1]) {
+      return children[idx + 1].getAttribute('data-editor-id')!;
+    }
+
+    return;
   }
 
   /**
@@ -158,7 +147,7 @@ export class DefaultDNDMode implements DNDModeInterface {
    */
   getTarget(e: DragEvent) {
     let target = (e.target as HTMLElement).closest(
-      '[data-editor-id]'
+      '[data-editor-id]:not(.ae-is-draging)'
     ) as HTMLElement;
 
     while (target) {
@@ -175,8 +164,9 @@ export class DefaultDNDMode implements DNDModeInterface {
       }
 
       target =
-        (target.parentElement?.closest('[data-editor-id]') as HTMLElement) ||
-        null;
+        (target.parentElement?.closest(
+          '[data-editor-id]:not(.ae-is-draging)'
+        ) as HTMLElement) || null;
     }
 
     return null;
@@ -202,10 +192,163 @@ export class DefaultDNDMode implements DNDModeInterface {
     return child;
   }
 
+  // 获取直接孩子，剔除掉间接孩子
+  getChildren(region: HTMLElement): Array<HTMLElement> {
+    const indirectChildren = Array.from(
+      region.querySelectorAll(':scope [data-editor-id] [data-editor-id]')
+    );
+    return Array.from(
+      region.querySelectorAll('[data-editor-id]:not(.ae-is-draging)')
+    ).filter(item => !indirectChildren.includes(item)) as any;
+  }
+
+  detectDropPosition(
+    event: DragEvent,
+    dropTarget: HTMLElement
+  ): 'top' | 'bottom' | 'left' | 'right' {
+    const rect = dropTarget.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    // 计算相对位置（百分比）
+    const relativeX = x / rect.width;
+    const relativeY = y / rect.height;
+
+    // 判断位置（上、下、左、右）
+    if (relativeY < 0.25) return 'top';
+    if (relativeY > 0.75) return 'bottom';
+    if (relativeX < 0.5) return 'left';
+    return 'right';
+  }
+
+  reductionPosition(
+    position: 'top' | 'bottom' | 'left' | 'right',
+    isHorizontal?: boolean
+  ) {
+    const left = position === 'left' || position === 'top';
+    return isHorizontal ? (left ? 'left' : 'right') : left ? 'top' : 'bottom';
+  }
+
+  updateIndicator(
+    ghost: HTMLElement,
+    container: HTMLElement,
+    target: HTMLElement,
+    dropPosition: 'top' | 'bottom' | 'left' | 'right'
+  ) {
+    const containerRect = container.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+    ghost.style.cssText = `width: ${
+      dropPosition === 'left' || dropPosition === 'right'
+        ? 'var(--ae-DragGhost-size);'
+        : targetRect.width
+    }px; height: ${
+      dropPosition === 'top' || dropPosition === 'bottom'
+        ? 'var(--ae-DragGhost-size);'
+        : targetRect.height
+    }px; left: ${
+      dropPosition === 'right'
+        ? targetRect.right - containerRect.left
+        : targetRect.left - containerRect.left
+    }px; top: ${
+      dropPosition === 'bottom'
+        ? targetRect.bottom - containerRect.top
+        : targetRect.top - containerRect.top
+    }px; `;
+
+    this.dropOn = target.getAttribute('data-editor-id')!;
+    this.dropPosition = dropPosition;
+  }
+
   /**
    * 销毁
    */
   dispose() {
-    delete this.dropBeforeId;
+    delete this.dropOn;
+    delete this.dropPosition;
+  }
+}
+
+interface LayoutInfo {
+  type: 'flex' | 'grid' | 'block';
+  isHorizontal?: boolean;
+  isWrapped?: boolean;
+  hasColumns?: boolean;
+}
+
+class LayoutDetector {
+  private container: HTMLElement;
+
+  constructor(container: HTMLElement) {
+    this.container = container;
+  }
+
+  detectByStyle(): LayoutInfo {
+    const win = this.container.ownerDocument.defaultView || window;
+    const style = win.getComputedStyle(this.container);
+    const display = style.display;
+
+    switch (display) {
+      case 'flex':
+      case 'inline-flex':
+        return this.detectFlexAlignment(style);
+      case 'grid':
+      case 'inline-grid':
+        return this.detectGridAlignment(style);
+      default:
+        return this.detectBlockAlignment();
+    }
+  }
+
+  detectFlexAlignment(style: CSSStyleDeclaration): LayoutInfo {
+    const direction = style.flexDirection;
+    const wrap = style.flexWrap;
+
+    return {
+      type: 'flex',
+      isHorizontal: direction.includes('row'),
+      isWrapped: wrap !== 'nowrap'
+    };
+  }
+
+  detectGridAlignment(style: CSSStyleDeclaration): LayoutInfo {
+    const autoFlow = style.gridAutoFlow;
+    const templateColumns = style.gridTemplateColumns;
+
+    return {
+      type: 'grid',
+      isHorizontal: autoFlow.includes('column'),
+      hasColumns: templateColumns !== 'none'
+    };
+  }
+
+  detectBlockAlignment(): LayoutInfo {
+    const children = Array.from(this.container.children).filter(item =>
+      item.matches('[data-editor-id]')
+    );
+    if (!children.length) {
+      return {type: 'block', isHorizontal: false};
+    } else if (children.length === 1) {
+      const rect = this.container.getBoundingClientRect();
+      const childRect = children[0].getBoundingClientRect();
+
+      return {
+        type: 'block',
+        isHorizontal:
+          childRect.height / rect.height > childRect.width / rect.width
+      };
+    }
+
+    const rect1 = children[0].getBoundingClientRect();
+    const rect2 = children[1].getBoundingClientRect();
+
+    return {
+      type: 'block',
+      isHorizontal:
+        Math.abs(rect2.left - rect1.left) > Math.abs(rect2.top - rect1.top)
+    };
+  }
+
+  detect(): LayoutInfo {
+    return this.detectByStyle();
   }
 }
