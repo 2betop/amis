@@ -531,6 +531,16 @@ title: Margin
 
 
 */
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:math';
+
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin margin-spacing($spacing: $spacing, $prefix: '.', $suffix: '') {
   @each $name, $value in $spacing {
     @if $name == default {
@@ -547,7 +557,7 @@ title: Margin
 
 @mixin margin-negative-spacing($spacing: $spacing, $prefix: '.', $suffix: '') {
   @each $name, $value in $spacing {
-    @if (type-of($value) == 'number') {
+    @if (meta.type-of($value) == 'number') {
       @if $name == default {
         #{$prefix}-m#{$suffix} {
           margin: $value * -1;
@@ -588,7 +598,7 @@ title: Margin
   $suffix: ''
 ) {
   @each $name, $value in $spacing {
-    @if (type-of($value) == 'number') {
+    @if (meta.type-of($value) == 'number') {
       @if $name == default {
         #{$prefix}-mx#{$suffix} {
           margin-left: $value * -1;
@@ -631,7 +641,7 @@ title: Margin
   $suffix: ''
 ) {
   @each $name, $value in $spacing {
-    @if (type-of($value) == 'number') {
+    @if (meta.type-of($value) == 'number') {
       @if $name == default {
         #{$prefix}-my#{$suffix} {
           margin-top: $value * -1;
@@ -667,7 +677,7 @@ title: Margin
   $suffix: ''
 ) {
   @each $name, $value in $spacing {
-    @if (type-of($value) == 'number') {
+    @if (meta.type-of($value) == 'number') {
       @if $name == default {
         #{$prefix}-mt#{$suffix} {
           margin-top: $value * -1;
@@ -701,7 +711,7 @@ title: Margin
   $suffix: ''
 ) {
   @each $name, $value in $spacing {
-    @if (type-of($value) == 'number') {
+    @if (meta.type-of($value) == 'number') {
       @if $name == default {
         #{$prefix}-mr#{$suffix} {
           margin-right: $value * -1;
@@ -735,7 +745,7 @@ title: Margin
   $suffix: ''
 ) {
   @each $name, $value in $spacing {
-    @if (type-of($value) == 'number') {
+    @if (meta.type-of($value) == 'number') {
       @if $name == default {
         #{$prefix}-mb#{$suffix} {
           margin-bottom: $value * -1;
@@ -769,7 +779,7 @@ title: Margin
   $suffix: ''
 ) {
   @each $name, $value in $spacing {
-    @if (type-of($value) == 'number') {
+    @if (meta.type-of($value) == 'number') {
       @if $name == default {
         #{$prefix}-ml#{$suffix} {
           margin-left: $value * -1;
@@ -784,7 +794,7 @@ title: Margin
 }
 
 @mixin make-margins($prefix: '.', $suffix: '') {
-  $margins: map-merge(
+  $margins: map.merge(
     $spacing,
     (
       auto: auto
@@ -808,7 +818,7 @@ title: Margin
 }
 
 @include make-margins();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-margins('.' + selector-escape($deivce + ':'));
   }

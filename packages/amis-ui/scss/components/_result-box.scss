@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 .#{$ns}ResultBox {
   flex-wrap: nowrap;
   padding: 0 px2rem(12px);

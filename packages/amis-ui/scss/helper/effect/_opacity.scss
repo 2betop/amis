@@ -25,6 +25,13 @@ title: Opacity
 
 */
 
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-opacity($prefix: '.', $suffix: '') {
   @each $name,
     $value
@@ -53,7 +60,7 @@ title: Opacity
 }
 
 @include make-opacity();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-opacity('.' + selector-escape($deivce + ':'));
   }

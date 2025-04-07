@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 .#{$ns}ListMenu {
   background: var(--ListMenu-item-bg);
   min-width: px2rem(200px);

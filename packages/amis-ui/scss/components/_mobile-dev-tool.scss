@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 .ae-MobileDevTool {
   display: flex;
   justify-content: space-between;

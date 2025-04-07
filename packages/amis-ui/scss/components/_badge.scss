@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 .#{$ns}Badge {
   display: inline-block;
   position: relative;

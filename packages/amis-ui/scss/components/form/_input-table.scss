@@ -1,3 +1,7 @@
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 .#{$ns}InputTable-UI {
   .#{$ns}Table-contentWrap.is-fixed {
     overflow: auto;

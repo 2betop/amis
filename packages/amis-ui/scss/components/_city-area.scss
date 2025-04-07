@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 .#{$ns}CityArea {
   flex: 1;
   min-width: 0;

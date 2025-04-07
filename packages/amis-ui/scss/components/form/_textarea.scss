@@ -1,3 +1,7 @@
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 .#{$ns}TextareaControl {
   --Form-input-clearBtn-padding: #{px2rem(2px)};
   position: relative;

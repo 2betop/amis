@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 .#{$ns}AppBcn {
   height: px2rem(30px);
   line-height: px2rem(30px);

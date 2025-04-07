@@ -112,6 +112,13 @@ title: Text Color
 还有 hover、active、focus、disabled 扩展，比如 `hover:text-black`
 
 */
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin text-colors-map(
   $colors: $colors,
   $namePrefix: '',
@@ -156,28 +163,28 @@ title: Text Color
 @include text-colors('.' + selector-escape('disabled:'), '.is-disabled');
 @include text-colors('.group:hover .' + selector-escape('group-hover:'));
 
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include text-colors('.' + selector-escape($deivce + ':'));
 
     @include text-colors(
-        '.' + selector-escape($deivce + ':') + selector-escape('hover:'),
-        ':hover'
+      '.' + selector-escape($deivce + ':') + selector-escape('hover:'),
+      ':hover'
     );
     @include text-colors(
-        '.' + selector-escape($deivce + ':') + selector-escape('active:'),
-        '.is-active'
+      '.' + selector-escape($deivce + ':') + selector-escape('active:'),
+      '.is-active'
     );
     @include text-colors(
-        '.' + selector-escape($deivce + ':') + selector-escape('focus:'),
-        ':focus'
+      '.' + selector-escape($deivce + ':') + selector-escape('focus:'),
+      ':focus'
     );
     @include text-colors(
-        '.' + selector-escape($deivce + ':') + selector-escape('disabled:'),
-        '.is-disabled'
+      '.' + selector-escape($deivce + ':') + selector-escape('disabled:'),
+      '.is-disabled'
     );
     @include text-colors(
-        '.group:hover .' + selector-escape($deivce + ':') +
+      '.group:hover .' + selector-escape($deivce + ':') +
         selector-escape('group-hover:')
     );
   }

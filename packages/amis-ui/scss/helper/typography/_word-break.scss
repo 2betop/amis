@@ -13,6 +13,13 @@ title: Word Break
 
 
 */
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-word-break($prefix: '.') {
   #{$prefix}break-normal {
     overflow-wrap: normal;
@@ -27,7 +34,7 @@ title: Word Break
 }
 
 @include make-word-break();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-word-break('.' + selector-escape($deivce + ':'));
   }

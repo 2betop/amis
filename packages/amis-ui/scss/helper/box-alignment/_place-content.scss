@@ -16,6 +16,14 @@ title: Place Content
 
 
 */
+
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-place-content($prefix: '.') {
   #{$prefix}place-content-center {
     place-content: center;
@@ -41,7 +49,7 @@ title: Place Content
 }
 
 @include make-place-content();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-place-content('.' + selector-escape($deivce + ':'));
   }

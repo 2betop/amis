@@ -1,7 +1,7 @@
 @use 'sass:color';
-@import 'node_modules/amis-ui/scss/mixins';
-@import 'node_modules/amis-ui/scss/functions';
-@import 'node_modules/amis-ui/scss/variables';
+@use 'node_modules/amis-ui/scss/mixins' as *;
+@use 'node_modules/amis-ui/scss/functions' as *;
+@use 'node_modules/amis-ui/scss/variables' as *;
 
 body {
   background-color: #fff !important;

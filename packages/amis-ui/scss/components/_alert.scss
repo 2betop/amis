@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 .#{$ns}Alert {
   font-size: var(--Alert-fontSize);
   font-weight: var(--alert-base-fontWeight);

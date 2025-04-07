@@ -1,3 +1,7 @@
+@use '../variables' as * with (
+  $ns: 'dark-'
+);
+
 @import '../properties';
 @import '../components';
 @import './dark-variables';

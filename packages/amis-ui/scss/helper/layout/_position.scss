@@ -30,6 +30,13 @@ https://www.w3school.com.cn/cssref/pr_class_position.asp
 
 */
 
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-position($prefix: '.') {
   @each $name,
     $value
@@ -48,7 +55,7 @@ https://www.w3school.com.cn/cssref/pr_class_position.asp
 }
 
 @include make-position();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-position('.' + selector-escape($deivce + ':'));
   }

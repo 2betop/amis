@@ -153,6 +153,14 @@ title: Top / Right / Bottom / Left
 
 */
 
+@use 'sass:map';
+@use 'sass:meta';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-single-position(
   $selector,
   $direction,
@@ -177,7 +185,7 @@ title: Top / Right / Bottom / Left
   }
 
   @each $name, $value in $map {
-    @if (type-of($value) == 'number') {
+    @if (meta.type-of($value) == 'number') {
       @include make-single-position(
         #{'-' + $direction},
         $direction,
@@ -200,7 +208,7 @@ title: Top / Right / Bottom / Left
   }
 
   @each $name, $value in $map {
-    @if (type-of($value) == 'number') {
+    @if (meta.type-of($value) == 'number') {
       #{$prefix}#{selector-escape('-inset-' + $name) } {
         top: $value * -1;
         right: $value * -1;
@@ -220,7 +228,7 @@ title: Top / Right / Bottom / Left
   }
 
   @each $name, $value in $map {
-    @if (type-of($value) == 'number') {
+    @if (meta.type-of($value) == 'number') {
       #{$prefix}#{selector-escape('-inset-x-' + $name) } {
         right: $value * -1;
         left: $value * -1;
@@ -238,7 +246,7 @@ title: Top / Right / Bottom / Left
   }
 
   @each $name, $value in $map {
-    @if (type-of($value) == 'number') {
+    @if (meta.type-of($value) == 'number') {
       #{$prefix}#{selector-escape('-inset-y-' + $name) } {
         top: $value * -1;
         bottom: $value * -1;
@@ -256,7 +264,7 @@ title: Top / Right / Bottom / Left
 @include make-inset-x-positions();
 @include make-inset-y-positions();
 
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-single-positions(
       'top',

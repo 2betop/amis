@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 .#{$ns}List {
   position: relative;
   // 黑科技，让 scrollIntoView 能够跑正确的位置

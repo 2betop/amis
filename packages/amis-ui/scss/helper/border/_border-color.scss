@@ -1,3 +1,8 @@
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
 /*!markdown
 
 ---
@@ -112,6 +117,8 @@ title: 边框颜色
 
 */
 
+@use 'sass:map';
+
 @mixin border-colors-map(
   $colors: $colors,
   $namePrefix: '',
@@ -150,7 +157,7 @@ title: 边框颜色
 @include border-colors('.' + selector-escape('disabled:'), '.is-disabled');
 @include border-colors('.group:hover .' + selector-escape('group-hover:'));
 
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include border-colors('.' + selector-escape($deivce + ':'));
 

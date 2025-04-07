@@ -1,4 +1,6 @@
-@import '../functions';
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
 
 // dark 主题
 // 参考： https://developer.apple.com/design/human-interface-guidelines/macos/visual-design/color/

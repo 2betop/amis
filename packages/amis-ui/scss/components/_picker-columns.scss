@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 .#{$ns}PickerColumns {
   position: relative;
   background-color: var(--PickerColumns-bg);

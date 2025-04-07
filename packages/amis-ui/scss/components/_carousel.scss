@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 @mixin arrow-control {
   width: 10%;
   min-width: var(--Carousel-arrowControl-width);

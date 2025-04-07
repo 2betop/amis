@@ -1,4 +1,7 @@
-$ns: 'a-';
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 :root {
   --colors-error-main: #e62525;
   --colors-error-1: #4d000a;

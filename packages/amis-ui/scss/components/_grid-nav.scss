@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 .u-hairline::after {
   position: absolute;
   box-sizing: border-box;

@@ -14,6 +14,13 @@ title: Justify Items
 
 
 */
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-justify-items($prefix: '.') {
   #{$prefix}justify-items-auto {
     justify-items: auto;
@@ -33,7 +40,7 @@ title: Justify Items
 }
 
 @include make-justify-items();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-justify-items('.' + selector-escape($deivce + ':'));
   }

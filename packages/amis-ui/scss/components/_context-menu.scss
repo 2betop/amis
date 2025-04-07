@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 // 为了提示用户这不是系统菜单。
 @keyframes contextMenuInSpecial {
   from {

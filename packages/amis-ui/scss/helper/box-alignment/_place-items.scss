@@ -14,6 +14,13 @@ title: Place Items
 
 
 */
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-place-items($prefix: '.') {
   #{$prefix}place-items-auto {
     place-items: auto;
@@ -33,7 +40,7 @@ title: Place Items
 }
 
 @include make-place-items();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-place-items('.' + selector-escape($deivce + ':'));
   }

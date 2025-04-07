@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 .#{$ns}Breadcrumb {
   font-size: var(--Breadcrumb-item-fontSize);
   font-weight: var(--fontWeightBase);

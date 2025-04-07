@@ -1,10 +1,13 @@
 @use 'sass:math';
-
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+@use '../mixins' as *;
 @mixin make-grid($class) {
   @for $i from 1 through $Grid-columns {
     .#{$ns}Grid-col--#{$class}#{$i} {
-      flex: 0 0 percentage(math.div($i, $Grid-columns));
-      max-width: percentage(math.div($i, $Grid-columns));
+      flex: 0 0 math.percentage(math.div($i, $Grid-columns));
+      max-width: math.percentage(math.div($i, $Grid-columns));
       min-height: 1px;
       padding-left: (math.div($Grid-gutterWidth, 2));
       padding-right: (math.div($Grid-gutterWidth, 2));

@@ -1,3 +1,8 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+@use '../mixins' as *;
+
 .#{$ns}Button {
   display: inline-flex;
   align-items: center;

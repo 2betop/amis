@@ -13,6 +13,13 @@ title: Grid Auto Flow
 
 
 */
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-grid-auto-rows($prefix: '.') {
   #{$prefix}auto-rows-auto {
     grid-auto-rows: auto;
@@ -31,7 +38,7 @@ title: Grid Auto Flow
 }
 
 @include make-grid-auto-rows();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-grid-auto-rows('.' + selector-escape($deivce + ':'));
   }

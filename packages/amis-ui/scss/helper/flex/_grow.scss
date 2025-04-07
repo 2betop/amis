@@ -11,6 +11,13 @@ title: Flex Grow
 
 
 */
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-flex-grow($prefix: '.') {
   #{$prefix}flex-grow-0 {
     flex-grow: 0;
@@ -21,7 +28,7 @@ title: Flex Grow
 }
 
 @include make-flex-grow();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-flex-grow('.' + selector-escape($deivce + ':'));
   }

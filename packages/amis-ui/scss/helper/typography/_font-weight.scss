@@ -18,6 +18,13 @@ title: Font Weight
 
 
 */
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-font-weight($prefix: '.') {
   @each $name,
     $value
@@ -40,7 +47,7 @@ title: Font Weight
 }
 
 @include make-font-weight();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-font-weight('.' + selector-escape($deivce + ':'));
   }

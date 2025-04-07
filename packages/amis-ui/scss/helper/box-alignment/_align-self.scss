@@ -14,6 +14,13 @@ title: Align Self
 
 */
 
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-align-self($prefix: '.') {
   #{$prefix}self-auto {
     align-self: auto;
@@ -33,7 +40,7 @@ title: Align Self
 }
 
 @include make-align-self();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-align-self('.' + selector-escape($deivce + ':'));
   }

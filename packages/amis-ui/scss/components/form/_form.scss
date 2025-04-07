@@ -1,5 +1,7 @@
 @use 'sass:math';
-
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
 .#{$ns}Form {
   font-size: var(--Form-fontSize);
   position: relative;
@@ -319,8 +321,8 @@
 
       @for $i from (1) through $Form--horizontal-columns {
         .#{$ns}Form-itemColumn--#{$i} {
-          flex: 0 0 percentage(math.div($i, $Form--horizontal-columns));
-          max-width: percentage(math.div($i, $Form--horizontal-columns));
+          flex: 0 0 math.percentage(math.div($i, $Form--horizontal-columns));
+          max-width: math.percentage(math.div($i, $Form--horizontal-columns));
           min-height: 1px;
         }
       }
@@ -533,7 +535,7 @@
 
 @for $i from 1 through 10 {
   .#{$ns}Form--column-#{$i} > .#{$ns}Form-item {
-    width: 100 / $i * 1%;
+    width: math.div(100, $i) * 1%;
   }
 
   .#{$ns}Form--column-#{$i} > [data-role*='container'] {

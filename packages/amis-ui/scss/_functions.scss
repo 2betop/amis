@@ -1,22 +1,28 @@
 @use 'sass:math';
+@use 'sass:map';
+@use 'sass:color';
+@use 'sass:string';
+@use 'sass:list';
+@use 'sass:meta';
+@use './variables' as *;
 
 //下一个断点
 @function breakpoint-next(
   $name,
   $breakpoints: breakpoints,
-  $breakpoint-names: map-keys($breakpoints)
+  $breakpoint-names: map.keys($breakpoints)
 ) {
-  $n: index($breakpoint-names, $name);
+  $n: list.index($breakpoint-names, $name);
   @return if(
-    $n < length($breakpoint-names),
-    nth($breakpoint-names, $n + 1),
+    $n < list.length($breakpoint-names),
+    list.nth($breakpoint-names, $n + 1),
     null
   );
 }
 
 //断点最小值
 @function breakpoint-min($name, $breakpoints: $breakpoints) {
-  $min: map-get($breakpoints, $name); // @return if($min != 0, $min, null);
+  $min: map.get($breakpoints, $name); // @return if($min != 0, $min, null);
   @return $min;
 }
 
@@ -26,17 +32,17 @@
   @return if($next, breakpoint-min($next, $breakpoints) - 1px, null);
 }
 
-//生成类名“-sm、-md、-lg、-cl” -xs?
+//生成类名"-sm、-md、-lg、-cl" -xs?
 @function breakpoint-infix($name, $breakpoints: $breakpoints) {
   @return if(breakpoint-min($name, $breakpoints) ==null, '', '-#{$name}');
 }
 
 @function px2rem($pixels, $context: $remFactor) {
-  @if (unitless($pixels)) {
+  @if (math.is-unitless($pixels)) {
     $pixels: $pixels * 1px;
   }
 
-  @if (unitless($context)) {
+  @if (math.is-unitless($context)) {
     $context: $context * 1px;
   }
 
@@ -44,11 +50,11 @@
 }
 
 @function tint($color, $intensity) {
-  $r: red($color);
-  $g: green($color);
-  $b: blue($color);
+  $r: color.red($color);
+  $g: color.green($color);
+  $b: color.blue($color);
 
-  @return rgb(
+  @return color.rgb(
     $r + (255 - $r) * $intensity,
     $g + (255 - $g) * $intensity,
     $b + (255 - $b) * $intensity
@@ -56,26 +62,26 @@
 }
 
 @function shade($color, $intensity) {
-  $r: red($color);
-  $g: green($color);
-  $b: blue($color);
+  $r: color.red($color);
+  $g: color.green($color);
+  $b: color.blue($color);
 
-  @return rgb($r * $intensity, $g * $intensity, $b * $intensity);
+  @return color.rgb($r * $intensity, $g * $intensity, $b * $intensity);
 }
 
 // 判断对象是否是 map
 @function is-map($var) {
-  @return type-of($var) == 'map';
+  @return meta.type-of($var) == 'map';
 }
 
 @function str-replace($string, $search, $replace: '') {
   $str: #{'' + $string};
-  $index: str-index($str, $search);
+  $index: string.index($str, $search);
 
   @if $index {
-    @return str-slice($str, 1, $index - 1) + $replace +
+    @return string.slice($str, 1, $index - 1) + $replace +
       str-replace(
-        str-slice($str, $index + str-length($search)),
+        string.slice($str, $index + string.length($search)),
         $search,
         $replace
       );

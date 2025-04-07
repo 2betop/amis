@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 @mixin popup-dark {
   & > .#{$ns}Nav-Menu {
     background-color: var(--Menu-dark-backgroundColor);
@@ -179,7 +183,7 @@
       &:hover {
         color: var(--Menu-light-fontColor-onHover);
       }
-      
+
       &__icon-wrapper {
         width: var(--Tabs-linkFontSize);
         height: var(--Tabs-linkFontSize);
@@ -393,7 +397,6 @@
   &-vertical.#{$ns}Nav-Menu-sub {
     min-width: px2rem(160px);
   }
-  
 
   &-item,
   &-submenu-title {

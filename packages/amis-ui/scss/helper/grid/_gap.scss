@@ -120,35 +120,95 @@ title: Gap
 
 
 */
-@mixin make-gaps($prefix: '.') {
-  @each $name, $value in $spacing {
-    @if $name == default {
-      #{$prefix}gap {
-        gap: $value;
-      }
-      #{$prefix}gap-x {
-        column-gap: $value;
-      }
-      #{$prefix}gap-y {
-        row-gap: $value;
-      }
-    } @else {
-      #{$prefix}gap-#{'' + selector-escape($name)} {
-        gap: $value;
-      }
-      #{$prefix}gap-x-#{'' + selector-escape($name)} {
-        column-gap: $value;
-      }
-      #{$prefix}gap-y-#{'' + selector-escape($name)} {
-        row-gap: $value;
-      }
-    }
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
+@mixin make-grid-gap($prefix: '.') {
+  #{$prefix}gap-0 {
+    gap: 0;
+  }
+
+  #{$prefix}gap-1 {
+    gap: 0.25rem;
+  }
+
+  #{$prefix}gap-2 {
+    gap: 0.5rem;
+  }
+
+  #{$prefix}gap-3 {
+    gap: 0.75rem;
+  }
+
+  #{$prefix}gap-4 {
+    gap: 1rem;
+  }
+
+  #{$prefix}gap-5 {
+    gap: 1.25rem;
+  }
+
+  #{$prefix}gap-6 {
+    gap: 1.5rem;
+  }
+
+  #{$prefix}gap-8 {
+    gap: 2rem;
+  }
+
+  #{$prefix}gap-10 {
+    gap: 2.5rem;
+  }
+
+  #{$prefix}gap-12 {
+    gap: 3rem;
+  }
+
+  #{$prefix}gap-16 {
+    gap: 4rem;
+  }
+
+  #{$prefix}gap-20 {
+    gap: 5rem;
+  }
+
+  #{$prefix}gap-24 {
+    gap: 6rem;
+  }
+
+  #{$prefix}gap-32 {
+    gap: 8rem;
+  }
+
+  #{$prefix}gap-40 {
+    gap: 10rem;
+  }
+
+  #{$prefix}gap-48 {
+    gap: 12rem;
+  }
+
+  #{$prefix}gap-56 {
+    gap: 14rem;
+  }
+
+  #{$prefix}gap-64 {
+    gap: 16rem;
+  }
+
+  #{$prefix}gap-px {
+    gap: 1px;
   }
 }
 
-@include make-gaps();
-@each $deivce in map-keys($devices) {
+@include make-grid-gap();
+
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
-    @include make-gaps('.' + selector-escape($deivce + ':'));
+    @include make-grid-gap('.' + selector-escape($deivce + ':'));
   }
 }

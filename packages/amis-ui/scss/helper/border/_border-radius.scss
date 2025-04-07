@@ -1,3 +1,8 @@
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
 /*!markdown
 
 ---
@@ -90,6 +95,8 @@ title: 边框圆角
 
 */
 
+@use 'sass:map';
+
 @mixin border-radius($prefix: '.', $suffix: '') {
   @each $name, $value in $borderRadiuses {
     #{$prefix}rounded#{suffixName($name)}#{$suffix} {
@@ -139,7 +146,7 @@ title: 边框圆角
 }
 
 @include border-radius();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include border-radius('.' + selector-escape($deivce + ':'));
   }

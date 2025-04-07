@@ -13,6 +13,13 @@ title: Flex
 
 
 */
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-flex($prefix: '.') {
   #{$prefix}flex-1 {
     flex: 1 1 0%;
@@ -31,7 +38,7 @@ title: Flex
 }
 
 @include make-flex();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-flex('.' + selector-escape($deivce + ':'));
   }

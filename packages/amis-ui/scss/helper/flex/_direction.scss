@@ -14,6 +14,13 @@ title: Flex Direction
 
 */
 
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-flex-direction($prefix: '.') {
   #{$prefix}flex-row {
     flex-direction: row;
@@ -32,7 +39,7 @@ title: Flex Direction
 }
 
 @include make-flex-direction();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-flex-direction('.' + selector-escape($deivce + ':'));
   }

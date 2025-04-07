@@ -107,6 +107,13 @@ title: Height
 
 */
 
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin height-sizing($map: $heights, $prefix: '.') {
   @each $name, $value in $map {
     @if $name == default {
@@ -154,7 +161,7 @@ title: Height
 }
 
 @include make-heights();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-heights('.' + selector-escape($deivce + ':'));
   }

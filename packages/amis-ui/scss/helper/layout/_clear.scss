@@ -1,3 +1,8 @@
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
 /*!markdown
 
 ---
@@ -30,6 +35,8 @@ https://www.w3school.com.cn/cssref/pr_class_clear.asp
 
 */
 
+@use 'sass:map';
+
 @mixin make-clear($prefix: '.') {
   #{$prefix}clear-right {
     clear: right;
@@ -49,7 +56,7 @@ https://www.w3school.com.cn/cssref/pr_class_clear.asp
 }
 
 @include make-clear();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-clear('.' + selector-escape($deivce + ':'));
   }

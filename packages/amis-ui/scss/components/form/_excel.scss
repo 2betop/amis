@@ -1,5 +1,7 @@
 // Excel 上传的配置，基于 https://react-dropzone.js.org/
-
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
 .#{$ns}ExcelControl {
   &-container {
     display: flex;

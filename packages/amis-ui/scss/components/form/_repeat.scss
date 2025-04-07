@@ -1,3 +1,7 @@
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 .#{$ns}RepeatControl {
   .repeat-btn {
     width: px2rem(80px);

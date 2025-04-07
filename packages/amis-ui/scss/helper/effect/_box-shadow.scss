@@ -19,6 +19,13 @@ title: Box Shadow
 
 */
 
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-box-shadow($prefix: '.', $suffix: '') {
   @each $name, $value in $boxShadows {
     @if $suffix == '.is-active' {
@@ -46,7 +53,7 @@ title: Box Shadow
 @include make-box-shadow('.' + selector-escape('disabled:'), '.is-disabled');
 @include make-box-shadow('.group:hover .' + selector-escape('group-hover:'));
 
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-box-shadow('.' + selector-escape($deivce + ':'));
 

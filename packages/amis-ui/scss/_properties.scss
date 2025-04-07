@@ -1,6 +1,7 @@
 @use 'sass:color';
-@import './functions';
-@import './variables';
+@use './variables' as *;
+@use './functions' as *;
+
 $remFactor: 16px;
 
 /* 此处放置需要override的变量，因为部分变量已经在variables.scss中定义 */

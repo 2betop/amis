@@ -1,4 +1,8 @@
 // Ang 主题
+@use '../variables' as * with (
+  $ns: 'a-'
+);
+
 @import '../properties';
 @import '../components';
 @import './ang-variables';

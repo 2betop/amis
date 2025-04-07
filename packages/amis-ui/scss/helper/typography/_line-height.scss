@@ -23,6 +23,13 @@ title: Line Height
 
 
 */
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-line-height($prefix: '.') {
   @each $name,
     $value
@@ -50,7 +57,7 @@ title: Line Height
 }
 
 @include make-line-height();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-line-height('.' + selector-escape($deivce + ':'));
   }

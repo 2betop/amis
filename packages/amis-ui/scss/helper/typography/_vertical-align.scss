@@ -16,26 +16,42 @@ title: Vertial Align
 
 
 */
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-vertical-align($prefix: '.') {
-  @each $name,
-    $value
-      in (
-        'baseline': baseline,
-        'top': top,
-        'middle': middle,
-        'bottom': bottom,
-        'text-top': text-top,
-        'text-bottom': text-bottom
-      )
-  {
-    #{$prefix}align-#{$name} {
-      vertical-align: $value;
-    }
+  #{$prefix}align-baseline {
+    vertical-align: baseline;
+  }
+
+  #{$prefix}align-top {
+    vertical-align: top;
+  }
+
+  #{$prefix}align-middle {
+    vertical-align: middle;
+  }
+
+  #{$prefix}align-bottom {
+    vertical-align: bottom;
+  }
+
+  #{$prefix}align-text-top {
+    vertical-align: text-top;
+  }
+
+  #{$prefix}align-text-bottom {
+    vertical-align: text-bottom;
   }
 }
 
 @include make-vertical-align();
-@each $deivce in map-keys($devices) {
+
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-vertical-align('.' + selector-escape($deivce + ':'));
   }

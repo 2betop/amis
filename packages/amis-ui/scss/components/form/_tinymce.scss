@@ -1,3 +1,7 @@
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 .tox-tinymce-aux {
   z-index: $zindex-top;
 }

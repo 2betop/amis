@@ -10,6 +10,13 @@ title: Flex Shrink
 | flex-shrink | flex-shrink: 1 |
 
 */
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-flex-shrink($prefix: '.') {
   #{$prefix}flex-shrink-0 {
     flex-shrink: 0;
@@ -20,7 +27,7 @@ title: Flex Shrink
 }
 
 @include make-flex-shrink();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-flex-shrink('.' + selector-escape($deivce + ':'));
   }

@@ -1,7 +1,9 @@
 /*!
  * https://github.com/arqex/react-datetime
  */
-
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
 .rdt {
   position: relative;
 }

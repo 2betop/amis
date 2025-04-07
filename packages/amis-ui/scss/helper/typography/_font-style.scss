@@ -11,6 +11,13 @@ title: Font Style
 
 
 */
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-font-style($prefix: '.') {
   #{$prefix}italic {
     font-style: italic;
@@ -22,7 +29,7 @@ title: Font Style
 }
 
 @include make-font-style();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-font-style('.' + selector-escape($deivce + ':'));
   }

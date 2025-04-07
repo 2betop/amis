@@ -1,3 +1,7 @@
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 .#{$ns}Checkbox {
   margin: var(--Form-label-paddingTop) var(--gap-sm) 0 0;
   font-weight: var(--fontWeightNormal);

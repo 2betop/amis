@@ -1,4 +1,8 @@
 // 参考 antd 主题
+@use '../variables' as * with (
+  $ns: 'antd-'
+);
+
 @import '../properties';
 @import '../components';
 @import './antd-variables';

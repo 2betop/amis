@@ -14,24 +14,34 @@ title: Text Transform
 
 
 */
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-text-transform($prefix: '.') {
-  @each $name,
-    $value
-      in (
-        'uppercase': uppercase,
-        'lowercase': lowercase,
-        'capitalize': capitalize,
-        'normal-case': none
-      )
-  {
-    #{$prefix}#{$name} {
-      text-transform: $value;
-    }
+  #{$prefix}uppercase {
+    text-transform: uppercase;
+  }
+
+  #{$prefix}lowercase {
+    text-transform: lowercase;
+  }
+
+  #{$prefix}capitalize {
+    text-transform: capitalize;
+  }
+
+  #{$prefix}normal-case {
+    text-transform: none;
   }
 }
 
 @include make-text-transform();
-@each $deivce in map-keys($devices) {
+
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-text-transform('.' + selector-escape($deivce + ':'));
   }

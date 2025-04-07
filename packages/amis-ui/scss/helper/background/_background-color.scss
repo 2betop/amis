@@ -1,3 +1,9 @@
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 /*!markdown
 
 ---
@@ -134,6 +140,8 @@ title: 背景色
 
 */
 
+@use 'sass:map';
+
 @mixin bg-colors-map(
   $colors: $colors,
   $namePrefix: '',
@@ -186,7 +194,7 @@ title: 背景色
 @include bg-colors('.' + selector-escape('disabled:'), '.is-disabled');
 @include bg-colors('.group:hover .' + selector-escape('group-hover:'));
 
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include bg-colors('.' + selector-escape($deivce + ':'));
 

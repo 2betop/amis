@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 .#{$ns}Panel {
   margin: var(--Panel-marginTop) var(--Panel-marginRight)
     var(--Panel-marginBottom) var(--Panel-marginLeft);

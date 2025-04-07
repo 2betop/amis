@@ -1,3 +1,8 @@
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
 /*!markdown
 
 ---
@@ -35,6 +40,8 @@ title: 边框宽度
 
 */
 
+@use 'sass:map';
+
 @mixin border-widths($prefix: '.', $suffix: '') {
   @each $name, $value in $borderWidths {
     #{$prefix}border#{suffixName($name)}#{$suffix} {
@@ -59,7 +66,7 @@ title: 边框宽度
 }
 
 @include border-widths();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include border-widths('.' + selector-escape($deivce + ':'));
   }

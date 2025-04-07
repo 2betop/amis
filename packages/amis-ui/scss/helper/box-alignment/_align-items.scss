@@ -15,6 +15,13 @@ title: Align Items
 
 */
 
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-align-items($prefix: '.') {
   #{$prefix}items-start {
     align-items: flex-start;
@@ -34,7 +41,7 @@ title: Align Items
 }
 
 @include make-align-items();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-align-items('.' + selector-escape($deivce + ':'));
   }

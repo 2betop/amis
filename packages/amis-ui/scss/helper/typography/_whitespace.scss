@@ -15,6 +15,11 @@ title: Whitespace
 
 
 */
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-whitespace($prefix: '.') {
   @each $name,
     $value
@@ -33,7 +38,7 @@ title: Whitespace
 }
 
 @include make-whitespace();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-whitespace('.' + selector-escape($deivce + ':'));
   }

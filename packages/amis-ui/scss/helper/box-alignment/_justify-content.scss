@@ -15,6 +15,13 @@ title: Jsutify Content
 
 
 */
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-justify-content($prefix: '.') {
   #{$prefix}justify-start {
     justify-content: flex-start;
@@ -37,7 +44,7 @@ title: Jsutify Content
 }
 
 @include make-justify-content();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-justify-content('.' + selector-escape($deivce + ':'));
   }

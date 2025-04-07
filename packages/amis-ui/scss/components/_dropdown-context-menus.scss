@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 .#{$ns}DropdownContextMenus {
   width: px2rem(20px);
   height: px2rem(20px);

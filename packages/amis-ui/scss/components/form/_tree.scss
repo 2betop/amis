@@ -1,3 +1,8 @@
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+
 .#{$ns}TreeControl {
   border: 1px solid var(--inputTree-border-color);
   padding: 6px 12px;

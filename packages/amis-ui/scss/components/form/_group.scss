@@ -1,5 +1,7 @@
 @use 'sass:math';
-
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
 .#{$ns}Form-groupColumn {
   margin-bottom: var(--gap-sm);
 }
@@ -101,8 +103,8 @@
 
   @for $i from (1) through $Form--horizontal-columns {
     .#{$ns}Form-groupColumn--#{$i} {
-      flex: 0 0 percentage(math.div($i, $Form--horizontal-columns));
-      max-width: percentage(math.div($i, $Form--horizontal-columns));
+      flex: 0 0 math.percentage(math.div($i, $Form--horizontal-columns));
+      max-width: math.percentage(math.div($i, $Form--horizontal-columns));
       min-height: 1px;
     }
   }

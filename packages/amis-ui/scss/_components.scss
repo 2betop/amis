@@ -1,5 +1,8 @@
 @use 'sass:color';
-@import './mixins';
+@use './mixins' as *;
+@use './variables' as *;
+@use './functions' as *;
+
 :root,
 .AMISCSSWrapper {
   --button-default-default-top-border-color: var(--colors-neutral-line-8);

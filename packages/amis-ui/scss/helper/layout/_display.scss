@@ -1,3 +1,8 @@
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
 /*!markdown
 
 ---
@@ -43,6 +48,8 @@ https://tailwindcss.com/docs/display
 不支持[「状态前缀」](../../../docs/style/state.md)，有需求请提 [issue](https://github.com/baidu/amis/issues)。
 
 */
+@use 'sass:map';
+
 @mixin make-display($prefix: '.') {
   @each $name,
     $value
@@ -75,7 +82,7 @@ https://tailwindcss.com/docs/display
 }
 
 @include make-display();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-display('.' + selector-escape($deivce + ':'));
   }

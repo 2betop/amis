@@ -1,3 +1,7 @@
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 .#{$ns}InputRange {
   display: flex;
   justify-content: space-between;
@@ -84,7 +88,7 @@
         var(--inputNumber-base-active-bottom-right-border-radius)
         var(--inputNumber-base-active-bottom-left-border-radius);
     }
-    
+
     .#{$ns}Number {
       width: px2rem(80px);
       border-top-right-radius: 0 !important;

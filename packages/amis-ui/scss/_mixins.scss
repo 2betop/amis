@@ -1,6 +1,11 @@
 @use 'sass:color';
+@use 'sass:list';
+@use 'sass:map';
+@use './variables' as variables;
+@use './functions' as *;
+
 // 媒体查询最小阈值
-@mixin media-breakpoint-up($name, $breakpoints: $breakpoints) {
+@mixin media-breakpoint-up($name, $breakpoints: variables.$breakpoints) {
   $min: breakpoint-min($name, $breakpoints);
 
   @if $min {
@@ -13,7 +18,7 @@
 }
 
 //媒体查询最大阈值
-@mixin media-breakpoint-down($name, $breakpoints: $breakpoints) {
+@mixin media-breakpoint-down($name, $breakpoints: variables.$breakpoints) {
   $max: breakpoint-max($name, $breakpoints);
 
   @if $max {
@@ -26,7 +31,11 @@
 }
 
 //媒体查询中间阈值
-@mixin media-breakpoint-between($min, $max, $breakpoints: $breakpoints) {
+@mixin media-breakpoint-between(
+  $min,
+  $max,
+  $breakpoints: variables.$breakpoints
+) {
   $min: breakpoint-min($min, $breakpoints);
   $max: breakpoint-max($max, $breakpoints);
 
@@ -35,8 +44,8 @@
   }
 }
 
-@mixin media-device($name, $devices: $devices) {
-  $n: map-get($devices, $name);
+@mixin media-device($name, $devices: variables.$devices) {
+  $n: map.get($devices, $name);
 
   @media #{$n} {
     @content;
@@ -116,7 +125,7 @@
   color: $font-color;
 
   & a,
-  & .#{$ns}Button--link {
+  & .#{variables.$ns}Button--link {
     color: $link-color;
 
     &:hover {
@@ -133,11 +142,11 @@
   }
 
   & .text-muted {
-    color: color.adjust($text-color, $lightness: -10%) !important;
+    color: color.adjust(variables.$text-color, $lightness: -10%) !important;
   }
 
   & .text-lt {
-    color: color.adjust($text-color, $lightness: 25%) !important;
+    color: color.adjust(variables.$text-color, $lightness: 25%) !important;
   }
 
   // &.auto,
@@ -250,7 +259,7 @@
   padding: $paddingTop $paddingRight $paddingBottom $paddingLeft;
   margin: $marginTop $marginRight $marginBottom $marginLeft;
 
-  .#{$ns}Button-icon:first-child:not(:last-child):not(.pull-right),
+  .#{variables.$ns}Button-icon:first-child:not(:last-child):not(.pull-right),
   > svg.icon:not(:last-child):not(.pull-right),
   > .pull-left {
     margin-right: $iconMargin;
@@ -260,7 +269,7 @@
     line-height: $iconSize;
   }
 
-  .#{$ns}Button-icon:last-child:not(:first-child):not(.pull-left),
+  .#{variables.$ns}Button-icon:last-child:not(:first-child):not(.pull-left),
   > .pull-right {
     font-size: $iconSize;
     margin-left: $iconMargin;
@@ -269,7 +278,9 @@
     line-height: $iconSize;
   }
 
-  .#{$ns}Button--loading:first-child:not(:last-child):not(.pull-right),
+  .#{variables.$ns}Button--loading:first-child:not(:last-child):not(
+      .pull-right
+    ),
   > svg.icon:not(:last-child):not(.pull-right),
   > .pull-left {
     font-size: $iconSize;
@@ -279,7 +290,7 @@
     line-height: $iconSize;
   }
 
-  .#{$ns}Button--loading:last-child:not(:first-child):not(.pull-left),
+  .#{variables.$ns}Button--loading:last-child:not(:first-child):not(.pull-left),
   > .pull-right {
     font-size: $iconSize;
     margin-left: $iconMargin;
@@ -288,10 +299,10 @@
     line-height: $iconSize;
   }
 
-  &.#{$ns}Button--iconOnly {
+  &.#{variables.$ns}Button--iconOnly {
     min-width: $height;
     padding: 0;
-    &:not(.#{$ns}Button--link) {
+    &:not(.#{variables.$ns}Button--link) {
       > svg.icon {
         width: $iconSize;
         height: $iconSize;
@@ -309,7 +320,7 @@
   }
 
   // img 需要加一下高度限制
-  img.#{$ns}Button-icon {
+  img.#{variables.$ns}Button-icon {
     height: $iconSize;
     vertical-align: middle;
   }
@@ -577,10 +588,10 @@
 
   // 需要能撑开
   @include media-breakpoint-up(sm) {
-    &.#{$ns}Form-control--sizeXs > &-input,
-    &.#{$ns}Form-control--sizeSm > &-input,
-    &.#{$ns}Form-control--sizeMd > &-input,
-    &.#{$ns}Form-control--sizeLg > &-input {
+    &.#{variables.$ns}Form-control--sizeXs > &-input,
+    &.#{variables.$ns}Form-control--sizeSm > &-input,
+    &.#{variables.$ns}Form-control--sizeMd > &-input,
+    &.#{variables.$ns}Form-control--sizeLg > &-input {
       min-width: 100%;
       display: inline-flex;
     }
@@ -653,7 +664,7 @@
 }
 
 @mixin tag-item($component-prefix) {
-  .#{$ns}#{$component-prefix}-value {
+  .#{variables.$ns}#{$component-prefix}-value {
     cursor: pointer;
     user-select: none;
     white-space: nowrap;
@@ -695,13 +706,13 @@
     &.is-disabled {
       pointer-events: none;
 
-      .#{$ns}#{$component-prefix}-valueIcon {
+      .#{variables.$ns}#{$component-prefix}-valueIcon {
         opacity: var(--Button-onDisabled-opacity);
       }
     }
   }
 
-  .#{$ns}#{$component-prefix}-valueIcon {
+  .#{variables.$ns}#{$component-prefix}-valueIcon {
     color: var(--Pick-base-value-icon-color);
     cursor: pointer;
     border-right: px2rem(1px) solid var(--Form-selectValue-borderColor);
@@ -712,7 +723,7 @@
     }
   }
 
-  .#{$ns}#{$component-prefix}-valueLabel {
+  .#{variables.$ns}#{$component-prefix}-valueLabel {
     padding: 0 var(--gap-xs);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -721,33 +732,33 @@
 }
 
 @function resolve-params($params...) {
-  @if length($params) == 1 {
+  @if list.length($params) == 1 {
     @return (
-      nth($params, 1),
-      nth($params, 1),
-      nth($params, 1),
-      nth($params, 1)
+      list.nth($params, 1),
+      list.nth($params, 1),
+      list.nth($params, 1),
+      list.nth($params, 1)
     );
-  } @else if length($params) == 2 {
+  } @else if list.length($params) == 2 {
     @return (
-      nth($params, 1),
-      nth($params, 2),
-      nth($params, 1),
-      nth($params, 2)
+      list.nth($params, 1),
+      list.nth($params, 2),
+      list.nth($params, 1),
+      list.nth($params, 2)
     );
-  } @else if length($params) == 3 {
+  } @else if list.length($params) == 3 {
     @return (
-      nth($params, 1),
-      nth($params, 2),
-      nth($params, 3),
-      nth($params, 2)
+      list.nth($params, 1),
+      list.nth($params, 2),
+      list.nth($params, 3),
+      list.nth($params, 2)
     );
-  } @else if length($params) == 4 {
+  } @else if list.length($params) == 4 {
     @return (
-      nth($params, 1),
-      nth($params, 2),
-      nth($params, 3),
-      nth($params, 4)
+      list.nth($params, 1),
+      list.nth($params, 2),
+      list.nth($params, 3),
+      list.nth($params, 4)
     );
   } @else {
     @warn "Please provide 1 to 4 params values.";
@@ -757,48 +768,48 @@
 
 @mixin borderRadius($token, $radius...) {
   $resolved: resolve-params($radius...);
-  #{$token}-top-left-border-radius: nth($resolved, 1);
-  #{$token}-top-right-border-radius: nth($resolved, 2);
-  #{$token}-bottom-right-border-radius: nth($resolved, 3);
-  #{$token}-bottom-left-border-radius: nth($resolved, 4);
+  #{$token}-top-left-border-radius: list.nth($resolved, 1);
+  #{$token}-top-right-border-radius: list.nth($resolved, 2);
+  #{$token}-bottom-right-border-radius: list.nth($resolved, 3);
+  #{$token}-bottom-left-border-radius: list.nth($resolved, 4);
 }
 
 @mixin borderColor($token, $color...) {
   $resolved: resolve-params($color...);
-  #{$token}-top-border-color: nth($resolved, 1);
-  #{$token}-right-border-color: nth($resolved, 2);
-  #{$token}-bottom-border-color: nth($resolved, 3);
-  #{$token}-left-border-color: nth($resolved, 4);
+  #{$token}-top-border-color: list.nth($resolved, 1);
+  #{$token}-right-border-color: list.nth($resolved, 2);
+  #{$token}-bottom-border-color: list.nth($resolved, 3);
+  #{$token}-left-border-color: list.nth($resolved, 4);
 }
 
 @mixin borderWidth($token, $width...) {
   $resolved: resolve-params($width...);
-  #{$token}-top-border-width: nth($resolved, 1);
-  #{$token}-right-border-width: nth($resolved, 2);
-  #{$token}-bottom-border-width: nth($resolved, 3);
-  #{$token}-left-border-width: nth($resolved, 4);
+  #{$token}-top-border-width: list.nth($resolved, 1);
+  #{$token}-right-border-width: list.nth($resolved, 2);
+  #{$token}-bottom-border-width: list.nth($resolved, 3);
+  #{$token}-left-border-width: list.nth($resolved, 4);
 }
 
 @mixin borderStyle($token, $style...) {
   $resolved: resolve-params($style...);
-  #{$token}-top-border-style: nth($resolved, 1);
-  #{$token}-right-border-style: nth($resolved, 2);
-  #{$token}-bottom-border-style: nth($resolved, 3);
-  #{$token}-left-border-style: nth($resolved, 4);
+  #{$token}-top-border-style: list.nth($resolved, 1);
+  #{$token}-right-border-style: list.nth($resolved, 2);
+  #{$token}-bottom-border-style: list.nth($resolved, 3);
+  #{$token}-left-border-style: list.nth($resolved, 4);
 }
 
 @mixin padding($token, $padding...) {
   $resolved: resolve-params($padding...);
-  #{$token}-paddingTop: nth($resolved, 1);
-  #{$token}-paddingRight: nth($resolved, 2);
-  #{$token}-paddingBottom: nth($resolved, 3);
-  #{$token}-paddingLeft: nth($resolved, 4);
+  #{$token}-paddingTop: list.nth($resolved, 1);
+  #{$token}-paddingRight: list.nth($resolved, 2);
+  #{$token}-paddingBottom: list.nth($resolved, 3);
+  #{$token}-paddingLeft: list.nth($resolved, 4);
 }
 
 @mixin margin($token, $margin...) {
   $resolved: resolve-params($margin...);
-  #{$token}-marginTop: nth($resolved, 1);
-  #{$token}-marginRight: nth($resolved, 2);
-  #{$token}-marginBottom: nth($resolved, 3);
-  #{$token}-marginLeft: nth($resolved, 4);
+  #{$token}-marginTop: list.nth($resolved, 1);
+  #{$token}-marginRight: list.nth($resolved, 2);
+  #{$token}-marginBottom: list.nth($resolved, 3);
+  #{$token}-marginLeft: list.nth($resolved, 4);
 }

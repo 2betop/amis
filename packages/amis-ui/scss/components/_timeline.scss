@@ -1,3 +1,8 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+@use '../mixins' as *;
+
 .#{$ns}Timeline {
   min-height: #{px2rem(10px)};
 }
@@ -263,25 +268,21 @@
 
       &.#{$ns}TimelineItem-content-align {
         &--left {
-          .#{$ns} {
-            &TimelineItem-time,
-            &TimelineItem-title {
-              text-align: left;
-            }
-            &TimelineItem-detail {
-              align-items: flex-start;
-            }
+          .#{$ns}TimelineItem-time,
+          .#{$ns}TimelineItem-title {
+            text-align: left;
+          }
+          .#{$ns}TimelineItem-detail {
+            align-items: flex-start;
           }
         }
         &--right {
-          .#{$ns} {
-            &TimelineItem-time,
-            &TimelineItem-title {
-              text-align: right;
-            }
-            &TimelineItem-detail {
-              align-items: flex-end;
-            }
+          .#{$ns}TimelineItem-time,
+          .#{$ns}TimelineItem-title {
+            text-align: right;
+          }
+          .#{$ns}TimelineItem-detail {
+            align-items: flex-end;
           }
         }
       }
@@ -352,11 +353,9 @@
     }
   }
 
-  .#{$ns} {
-    &TimelineItem-round-wrapper {
-      position: absolute;
-      transform: translateY(-0.5px);
-    }
+  .#{$ns}TimelineItem-round-wrapper {
+    position: absolute;
+    transform: translateY(-0.5px);
   }
 }
 
@@ -565,8 +564,6 @@
   }
 }
 
-.#{$ns} {
-  &TimelineItem-round-wrapper {
-    z-index: 1;
-  }
+.#{$ns}TimelineItem-round-wrapper {
+  z-index: 1;
 }

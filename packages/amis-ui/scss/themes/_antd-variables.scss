@@ -1,4 +1,7 @@
-$ns: 'antd-';
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 :root {
   --colors-neutral-fill-none: translate;
   --colors-error-main: #ff4d4f;

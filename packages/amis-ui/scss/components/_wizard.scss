@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 .#{$ns}Wizard {
   @include clearfix();
 
@@ -229,8 +233,8 @@
   &-footer {
     padding: var(--sizes-size-5) var(--sizes-size-7);
     .#{$ns}Button {
-      &+.#{$ns}Button {
-        margin-left: var(--Panel-footerButtonMarginLeft)
+      & + .#{$ns}Button {
+        margin-left: var(--Panel-footerButtonMarginLeft);
       }
     }
   }

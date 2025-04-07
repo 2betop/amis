@@ -51,6 +51,13 @@ title: Grid Row Start / End
 
 
 */
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-grid-row-span($prefix: '.') {
   #{$prefix}row-auto {
     grid-row: auto;
@@ -192,7 +199,7 @@ title: Grid Row Start / End
 @include make-grid-row-span();
 @include make-grid-row-start();
 @include make-grid-row-end();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-grid-row-span('.' + selector-escape($deivce + ':'));
     @include make-grid-row-start('.' + selector-escape($deivce + ':'));

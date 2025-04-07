@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 @mixin avatar-size($size, $fontSize) {
   width: $size;
   height: $size;
@@ -10,7 +14,10 @@
 
 .#{$ns}Avatar {
   background: var(--Avatar-bg);
-  @include avatar-size(var(--Avatar-size-default), var(--Avatar-icon-size-default));
+  @include avatar-size(
+    var(--Avatar-size-default),
+    var(--Avatar-icon-size-default)
+  );
   position: relative;
   display: inline-block;
   overflow: hidden;
@@ -19,11 +26,17 @@
   text-align: center;
 
   &--lg {
-    @include avatar-size(var(--Avatar-size-large), var(--Avatar-icon-size-large));
+    @include avatar-size(
+      var(--Avatar-size-large),
+      var(--Avatar-icon-size-large)
+    );
   }
 
   &--sm {
-    @include avatar-size(var(--Avatar-size-small), var(--Avatar-icon-size-small));
+    @include avatar-size(
+      var(--Avatar-size-small),
+      var(--Avatar-icon-size-small)
+    );
   }
 
   &--text {
@@ -46,7 +59,6 @@
   }
 
   &:hover {
-
     img,
     i {
       transform: scale(1.1);

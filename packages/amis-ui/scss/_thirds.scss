@@ -1,12 +1,12 @@
-@import '../../../node_modules/codemirror/lib/codemirror';
-@import '../../../node_modules/codemirror/theme/base16-dark';
-@import '../../../node_modules/codemirror/theme/idea';
-@import '../../../node_modules/froala-editor/css/froala_style.min';
-@import '../../../node_modules/froala-editor/css/froala_editor.pkgd.min';
-@import '../../../node_modules/tinymce/skins/ui/oxide/skin';
-@import '../../../node_modules/video-react/dist/video-react';
-@import '../../../node_modules/cropperjs/dist/cropper';
-@import '../../../node_modules/office-viewer/dist/office';
-@import '../../../node_modules/animate.css/animate.min';
+@use '../../../node_modules/codemirror/lib/codemirror';
+@use '../../../node_modules/codemirror/theme/base16-dark';
+@use '../../../node_modules/codemirror/theme/idea';
+@use '../../../node_modules/froala-editor/css/froala_style.min';
+@use '../../../node_modules/froala-editor/css/froala_editor.pkgd.min';
+@use '../../../node_modules/tinymce/skins/ui/oxide/skin';
+@use '../../../node_modules/video-react/dist/video-react';
+@use '../../../node_modules/cropperjs/dist/cropper';
+@use '../../../node_modules/office-viewer/dist/office';
+@use '../../../node_modules/animate.css/animate.min';
 
-@import './components/react-datetime';
+@use './components/react-datetime';

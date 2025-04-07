@@ -2,6 +2,9 @@
  * Debug 模块的 UI，由于没法使用任何主题，所以这里使用独立配色风格
  */
 
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
 .AMISDebug {
   position: fixed;
   z-index: $zindex-debug;

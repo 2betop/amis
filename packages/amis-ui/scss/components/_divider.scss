@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 .#{$ns}Divider {
   margin: var(--Divider-marginTop) var(--Divider-marginRight)
     var(--Divider-marginBottom) var(--Divider-marginLeft);

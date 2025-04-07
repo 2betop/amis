@@ -24,6 +24,13 @@ title: Visibility
 
 */
 
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-visibility($prefix: '.') {
   #{$prefix}visible {
     visibility: visible;
@@ -35,7 +42,7 @@ title: Visibility
 }
 
 @include make-visibility();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-visibility('.' + selector-escape($deivce + ':'));
   }

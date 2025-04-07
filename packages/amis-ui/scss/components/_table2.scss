@@ -1,4 +1,8 @@
-.#{$ns}Table2 {
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
+.#{$ns}Table {
   position: relative;
   border-radius: var(--Table-borderRadius);
 

@@ -1,3 +1,7 @@
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 .#{$ns}CityPicker {
   .#{$ns}Select {
     margin-right: var(--gap-xs);

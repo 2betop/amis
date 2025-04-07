@@ -13,6 +13,13 @@ title: Grid Auto Columns
 
 
 */
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-grid-auto-columns($prefix: '.') {
   #{$prefix}auto-cols-auto {
     grid-auto-columns: auto;
@@ -31,7 +38,7 @@ title: Grid Auto Columns
 }
 
 @include make-grid-auto-columns();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-grid-auto-columns('.' + selector-escape($deivce + ':'));
   }

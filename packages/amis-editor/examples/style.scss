@@ -1,7 +1,7 @@
-@import '../../amis-ui/scss/functions';
-@import '../../amis-ui/scss/variables';
-@import '../../amis-ui/scss/helper';
-@import './corpus-i18n';
+@use '../../amis-ui/scss/functions' as *;
+@use '../../amis-ui/scss/variables' as *;
+@use '../../amis-ui/scss/helper' as *;
+@use './corpus-i18n';
 
 $editor-default-color: #151b26; // 默认的字体色
 $editor-active-color: #2468f2;

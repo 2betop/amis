@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 .#{$ns}StatusField {
   vertical-align: middle;
   white-space: nowrap;
@@ -84,15 +88,15 @@
     }
 
     &.icon-fail {
-      color: var(--Status-fail-color)
+      color: var(--Status-fail-color);
     }
-  
+
     &.icon-success {
-      color: var(--Status-success-color)
+      color: var(--Status-success-color);
     }
-  
+
     &.icon-schedule {
-      color: var(--Status-schedule-color)
+      color: var(--Status-schedule-color);
     }
   }
 

@@ -15,6 +15,13 @@ title: Letter Spacing
 
 
 */
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-letter-spacing($prefix: '.') {
   @each $name,
     $value
@@ -34,7 +41,7 @@ title: Letter Spacing
 }
 
 @include make-letter-spacing();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-letter-spacing('.' + selector-escape($deivce + ':'));
   }

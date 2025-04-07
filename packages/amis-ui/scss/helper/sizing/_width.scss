@@ -1,17 +1,3 @@
-@mixin width-sizing($map: $widths, $prefix: '.') {
-  @each $name, $value in $map {
-    @if $name == default {
-      #{$prefix}w {
-        width: $value;
-      }
-    } @else {
-      #{$prefix}w-#{'' + selector-escape($name)} {
-        width: $value;
-      }
-    }
-  }
-}
-
 /*!markdown
 
 ---
@@ -116,6 +102,27 @@ title: Width
 
 */
 
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
+@mixin width-sizing($map: $widths, $prefix: '.') {
+  @each $name, $value in $map {
+    @if $name == default {
+      #{$prefix}w {
+        width: $value;
+      }
+    } @else {
+      #{$prefix}w-#{'' + selector-escape($name)} {
+        width: $value;
+      }
+    }
+  }
+}
+
 @mixin min-width-sizing($map: $minWidths, $prefix: '.') {
   @each $name, $value in $map {
     @if $name == default {
@@ -167,7 +174,7 @@ title: Width
 }
 
 @include make-widths();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-widths('.' + selector-escape($deivce + ':'));
   }

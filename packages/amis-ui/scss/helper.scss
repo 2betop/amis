@@ -1,72 +1,72 @@
-@import './functions';
-@import './variables';
-@import './mixins';
+@use './variables' as *;
+@use './functions' as *;
+@use './mixins' as *;
 
-@import './utilities';
+@use './utilities';
 
 // background
-@import './helper/background/background-color';
+@use './helper/background/background-color';
 
-@import './helper/border/border-color';
-@import './helper/border/border-radius';
-@import './helper/border/border-width';
-@import './helper/border/border-style';
+@use './helper/border/border-color';
+@use './helper/border/border-radius';
+@use './helper/border/border-width';
+@use './helper/border/border-style';
 
-@import './helper/layout/box-sizing';
-@import './helper/layout/clear';
-@import './helper/layout/display';
-@import './helper/layout/float';
-@import './helper/layout/overflow';
-@import './helper/layout/position';
-@import './helper/layout/top-right-bottom-left';
-@import './helper/layout/visibility';
-@import './helper/layout/z-index';
+@use './helper/layout/box-sizing';
+@use './helper/layout/clear';
+@use './helper/layout/display';
+@use './helper/layout/float';
+@use './helper/layout/overflow';
+@use './helper/layout/position';
+@use './helper/layout/top-right-bottom-left';
+@use './helper/layout/visibility';
+@use './helper/layout/z-index';
 
-@import './helper/flex/direction';
-@import './helper/flex/flex';
-@import './helper/flex/grow';
-@import './helper/flex/order';
-@import './helper/flex/shrink';
-@import './helper/flex/wrap';
+@use './helper/flex/direction';
+@use './helper/flex/flex';
+@use './helper/flex/grow';
+@use './helper/flex/order';
+@use './helper/flex/shrink';
+@use './helper/flex/wrap';
 
-@import './helper/grid/auto-columns';
-@import './helper/grid/auto-flow';
-@import './helper/grid/auto-rows';
-@import './helper/grid/column-start-end';
-@import './helper/grid/columns';
-@import './helper/grid/gap';
-@import './helper/grid/row-start-end';
-@import './helper/grid/rows';
+@use './helper/grid/auto-columns';
+@use './helper/grid/auto-flow';
+@use './helper/grid/auto-rows';
+@use './helper/grid/column-start-end';
+@use './helper/grid/columns';
+@use './helper/grid/gap';
+@use './helper/grid/row-start-end';
+@use './helper/grid/rows';
 
-@import './helper/box-alignment/align-content';
-@import './helper/box-alignment/align-items';
-@import './helper/box-alignment/align-self';
-@import './helper/box-alignment/justify-content';
-@import './helper/box-alignment/justify-items';
-@import './helper/box-alignment/justify-self';
-@import './helper/box-alignment/place-content';
-@import './helper/box-alignment/place-items';
-@import './helper/box-alignment/place-self';
+@use './helper/box-alignment/align-content';
+@use './helper/box-alignment/align-items';
+@use './helper/box-alignment/align-self';
+@use './helper/box-alignment/justify-content';
+@use './helper/box-alignment/justify-items';
+@use './helper/box-alignment/justify-self';
+@use './helper/box-alignment/place-content';
+@use './helper/box-alignment/place-items';
+@use './helper/box-alignment/place-self';
 
-@import './helper/effect/box-shadow';
-@import './helper/effect/opacity';
+@use './helper/effect/box-shadow';
+@use './helper/effect/opacity';
 
-@import './helper/spacing/margin';
-@import './helper/spacing/padding';
-@import './helper/spacing/space-between';
+@use './helper/spacing/margin';
+@use './helper/spacing/padding';
+@use './helper/spacing/space-between';
 
-@import './helper/sizing/width';
-@import './helper/sizing/height';
+@use './helper/sizing/width';
+@use './helper/sizing/height';
 
-@import './helper/typography/font-family';
-@import './helper/typography/font-size';
-@import './helper/typography/font-style';
-@import './helper/typography/font-weight';
-@import './helper/typography/line-height';
-@import './helper/typography/list-style-type';
-@import './helper/typography/text-align';
-@import './helper/typography/text-color';
-@import './helper/typography/text-decoration';
-@import './helper/typography/text-transform';
-@import './helper/typography/whitespace';
-@import './helper/typography/word-break';
+@use './helper/typography/font-family';
+@use './helper/typography/font-size';
+@use './helper/typography/font-style';
+@use './helper/typography/font-weight';
+@use './helper/typography/line-height';
+@use './helper/typography/list-style-type';
+@use './helper/typography/text-align';
+@use './helper/typography/text-color';
+@use './helper/typography/text-decoration';
+@use './helper/typography/text-transform';
+@use './helper/typography/whitespace';
+@use './helper/typography/word-break';

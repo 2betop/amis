@@ -4,7 +4,9 @@
  * @author allenve(yupeng12@baidu.com)
  * @created: 2024/12/12
  */
-
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
 .#{$ns}Shape {
   position: relative;
   display: inline-flex;

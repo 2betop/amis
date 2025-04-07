@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 .#{$ns}Field-copyBtn {
   color: var(--Copyable-iconColor);
   margin-left: var(--gap-xs);

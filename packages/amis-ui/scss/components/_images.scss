@@ -1,5 +1,7 @@
 @use 'sass:math';
-
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
 .sm-ss-sss-m,
 .sss-ss-ms-m,
 .sms-ss-sms-m,
@@ -8,8 +10,8 @@
 .sss-ss-sm-ss,
 .mss-ss-ssm-ss,
 .sss-ss-mm-ss,
-[class^="even-"]{
-  .#{$ns}Image{
+[class^='even-'] {
+  .#{$ns}Image {
     border: none;
     margin: 0;
     padding: 0;
@@ -213,15 +215,14 @@
     display: flex;
   }
 
-  .#{$ns}Img-container{
+  .#{$ns}Img-container {
     position: relative;
 
-    img{
-      transition: all ease-in-out .3s;
-
+    img {
+      transition: all ease-in-out 0.3s;
     }
 
-    .mask{
+    .mask {
       width: 100%;
       height: 100%;
       position: absolute;
@@ -236,142 +237,146 @@
       font-size: px2rem(15px);
       background-color: rgb(44, 63, 82);
       color: #fff;
-      transition: all ease-in-out .3s;
+      transition: all ease-in-out 0.3s;
     }
   }
 
-  .hover-slide{
-    &:hover .mask{
+  .hover-slide {
+    &:hover .mask {
       opacity: 1;
       transform: translate(5%, 5%);
       z-index: 1;
     }
   }
 
-  .pull-top{
-    .mask{
+  .pull-top {
+    .mask {
       opacity: 1;
     }
-    img{
+    img {
       position: absolute;
     }
-    &:hover img{
+    &:hover img {
       transform: translateY(-70%);
     }
   }
 
-  .scale-center{
-    .mask{
+  .scale-center {
+    .mask {
       scale: 0.5;
 
-      span{
+      span {
         position: absolute;
         top: 5%;
         left: 5%;
       }
     }
 
-    &:hover .mask{
+    &:hover .mask {
       transform: scale(2);
       opacity: 1;
     }
 
-    &:hover img{
+    &:hover img {
       transform: scale(0.5);
     }
   }
 
-  .scale-top{
-    img{
+  .scale-top {
+    img {
       position: absolute;
     }
     .mask {
       opacity: 1;
-      span{
+      span {
         position: absolute;
         bottom: 5%;
         left: 5%;
       }
     }
-    &:hover img{
+    &:hover img {
       transform: translateY(-50%) scale(0.5);
     }
   }
 
-  .text-style-1{
+  .text-style-1 {
     overflow: hidden;
-    .mask{
+    .mask {
       z-index: 1;
       opacity: 1;
       background: rgba(48, 133, 163, 0.4);
-      span{
+      span {
         position: absolute;
         left: 5%;
         bottom: 5%;
-        transition: all ease-in-out .3s;
+        transition: all ease-in-out 0.3s;
       }
     }
-    img{
+    img {
       scale: 1.2;
       transform: translateX(-5%);
     }
-    &:hover .mask{
+    &:hover .mask {
       background: rgba(48, 133, 163, 0);
-      span{
+      span {
         transform: translateY(-200%);
       }
     }
-    &:hover img{
+    &:hover img {
       transform: translateX(5%);
     }
   }
 
-  .text-style-2{
-    .mask{
+  .text-style-2 {
+    .mask {
       opacity: 1;
       background: transparent;
-      span{
+      span {
         z-index: 1;
-        transition: all ease-in-out .3s;
+        transition: all ease-in-out 0.3s;
       }
     }
-    .mask::before{
-      content: "";
+    .mask::before {
+      content: '';
       position: absolute;
       bottom: 0;
       left: 0;
       width: 100%;
       height: 0%;
-      background: linear-gradient(to bottom, rgba(72, 76, 97, 0) 0, rgba(72, 76, 97, .8) 75%);
-      transition: all ease-in-out .3s;
+      background: linear-gradient(
+        to bottom,
+        rgba(72, 76, 97, 0) 0,
+        rgba(72, 76, 97, 0.8) 75%
+      );
+      transition: all ease-in-out 0.3s;
     }
-    &:hover .mask::before{
+    &:hover .mask::before {
       height: 100%;
     }
-    &:hover .mask span{
+    &:hover .mask span {
       transform: translateY(-200%);
     }
   }
 
-  .text-style-3{
+  .text-style-3 {
     overflow: hidden;
-    .mask{
+    .mask {
       z-index: 1;
       opacity: 1;
       background: transparent;
-      span{
+      span {
         position: absolute;
         top: 10%;
         transition: all 0.3s ease-in-out;
       }
     }
-    img{
+    img {
       scale: 1.2;
       transition: all 0.3s ease-in-out;
     }
     .mask::before,
-    .mask::after{
-      content: "";
+    .mask::after {
+      content: '';
       position: absolute;
       top: 10%;
       bottom: 10%;
@@ -381,7 +386,7 @@
       color: rgba(255, 255, 255, 0.7);
       opacity: 0;
     }
-    .mask::before{
+    .mask::before {
       border-top: 1px solid #ffffff;
       border-bottom: 1px solid #ffffff;
       transform: scaleX(0); /* 初始状态：水平方向缩放为0 */
@@ -393,62 +398,62 @@
       transform: scaleY(0); /* 初始状态：垂直方向缩放为0 */
       transform-origin: top; /* 设置变换的原点为顶部 */
     }
-    &:hover .mask::before{
+    &:hover .mask::before {
       opacity: 1;
       transform: scaleX(1.2) translateX(-10%); /* 鼠标悬停时：水平方向缩放为1 */
     }
-    &:hover .mask::after{
+    &:hover .mask::after {
       opacity: 1;
       transform: scaleY(1.2) translateY(-10%); /* 鼠标悬停时：垂直方向缩放为1 */
     }
-    &:hover .mask{
+    &:hover .mask {
       background: rgba(48, 133, 163, 0.4);
-      span{
+      span {
         top: 20%;
       }
     }
-    &:hover img{
+    &:hover img {
       transform: translateY(10%);
     }
   }
 
-  .text-style-4{
-    .mask{
+  .text-style-4 {
+    .mask {
       background: #fff;
       opacity: 1;
       left: 0;
       bottom: 0;
       top: auto;
-      height: 0!important;
+      height: 0 !important;
       transform-origin: bottom;
       color: #0b0a22;
       z-index: 1;
-      span{
+      span {
         display: none;
       }
     }
 
-    &:hover .mask{
-      height: 40%!important;
-      span{
+    &:hover .mask {
+      height: 40% !important;
+      span {
         display: block;
       }
     }
   }
 
-  .text-style-5{
-    .mask{
+  .text-style-5 {
+    .mask {
       opacity: 1;
       background: rgba(48, 133, 163, 0);
       z-index: 1;
-      span{
+      span {
         position: relative;
         bottom: -10%;
         transition: all 0.3s ease-in-out;
       }
     }
-    .mask::before{
-      content: "";
+    .mask::before {
+      content: '';
       border: 1px solid #ffffff;
       position: absolute;
       top: 0;
@@ -461,34 +466,34 @@
       transition: all 0.3s ease-in-out;
       opacity: 0;
     }
-    &:hover .mask::before{
+    &:hover .mask::before {
       width: 90%;
       height: 90%;
       opacity: 1;
     }
 
-    &:hover .mask{
+    &:hover .mask {
       background: rgba(48, 133, 163, 0.4);
-      span{
+      span {
         bottom: 10%;
       }
     }
   }
 
-  .text-style-6{
-    .mask{
+  .text-style-6 {
+    .mask {
       opacity: 1;
       z-index: 1;
       background: rgba(48, 133, 163, 0.4);
-      span{
+      span {
         position: absolute;
         transition: all 0.3s ease-in-out;
         bottom: 40%;
       }
     }
     .mask::before,
-    .mask::after{
-      content: "";
+    .mask::after {
+      content: '';
       position: absolute;
       top: 5%;
       bottom: 5%;
@@ -498,7 +503,7 @@
       color: rgba(255, 255, 255, 0.7);
       opacity: 0;
     }
-    .mask::before{
+    .mask::before {
       border-top: 1px solid #ffffff;
       border-bottom: 1px solid #ffffff;
       transform: scaleX(0); /* 初始状态：水平方向缩放为0 */
@@ -508,52 +513,52 @@
       border-right: 1px solid #ffffff;
       transform: scaleY(0); /* 初始状态：垂直方向缩放为0 */
     }
-    &:hover .mask::before{
+    &:hover .mask::before {
       opacity: 1;
       transform: scaleX(1); /* 鼠标悬停时：水平方向缩放为1 */
     }
-    &:hover .mask::after{
+    &:hover .mask::after {
       opacity: 1;
       transform: scaleY(1); /* 鼠标悬停时：垂直方向缩放为1 */
     }
-    &:hover .mask{
+    &:hover .mask {
       background: rgba(48, 133, 163, 0);
-      span{
+      span {
         bottom: 5%;
       }
     }
   }
 
-  .text-style-7{
-    .mask{
+  .text-style-7 {
+    .mask {
       opacity: 1;
       z-index: 1;
       background: rgba(48, 133, 163, 0);
-      span{
+      span {
         position: absolute;
         top: 10%;
         transition: all 0.3s ease-in-out;
       }
     }
     .mask::before,
-    .mask::after{
-      content: "";
+    .mask::after {
+      content: '';
       width: 80%;
       height: 1px;
       background: #ffffff;
       position: absolute;
       transition: all 0.3s ease-in-out;
     }
-    &:hover .mask{
+    &:hover .mask {
       background: rgba(48, 133, 163, 0.4);
-      span{
+      span {
         top: 20%;
       }
     }
-    &:hover .mask::before{
+    &:hover .mask::before {
       transform: rotateZ(45deg);
     }
-    &:hover .mask::after{
+    &:hover .mask::after {
       transform: rotateZ(-45deg);
     }
   }
@@ -645,6 +650,3 @@
 .Image-view-icon {
   content: var(--image-image-normal-icon);
 }
-
-
-

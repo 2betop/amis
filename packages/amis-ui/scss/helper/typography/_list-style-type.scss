@@ -15,6 +15,13 @@ title: List Style Type
 
 */
 
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-list-style-type($prefix: '.') {
   @each $name, $value in ('none': none, 'disc': disc, 'decimal': decimal) {
     #{$prefix}list-#{$name} {
@@ -33,7 +40,7 @@ title: List Style Type
 
 @include make-list-style-type();
 @include make-list-style-position();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-list-style-type('.' + selector-escape($deivce + ':'));
     @include make-list-style-position('.' + selector-escape($deivce + ':'));

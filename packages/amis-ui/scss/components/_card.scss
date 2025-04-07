@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../functions' as *;
+@use '../mixins' as *;
+
 .#{$ns}Card {
   background: var(--Card-bg);
   border: var(--Card-borderWidth) solid var(--Card-borderColor);

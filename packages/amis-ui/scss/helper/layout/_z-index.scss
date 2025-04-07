@@ -40,6 +40,13 @@ Utilities for controlling the stack order of an element.
 
 */
 
+@use 'sass:map';
+@use '../../variables' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+@use '../../functions' as *;
+@use '../../mixins' as *;
+
 @mixin make-z-index($prefix: '.') {
   @each $name,
     $value
@@ -60,7 +67,7 @@ Utilities for controlling the stack order of an element.
 }
 
 @include make-z-index();
-@each $deivce in map-keys($devices) {
+@each $deivce in map.keys($devices) {
   @include media-device($deivce) {
     @include make-z-index('.' + selector-escape($deivce + ':'));
   }
