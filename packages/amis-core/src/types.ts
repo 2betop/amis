@@ -601,7 +601,7 @@ export interface NavigationObject {
 }
 
 /**
- * 表达式，语法 `data.xxx > 5`。
+ * 表达式，语法 `${xxx > 5}`。
  */
 export type SchemaExpression = string;
 
